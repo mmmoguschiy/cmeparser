@@ -24,7 +24,7 @@ h = {
     }
 
 try:
-    r = requests.get('https://www.cmegroup.com/CmeWS/mvc/Settlements/Options/Settlements/8120/OOF?monthYear=4EUK21&strategy=DEFAULT&optionProductId=8117&optionExpiration=8120-K1&tradeDate='+sys.argv[1], timeout=2.50, headers=h).json()
+    r = requests.get('https://www.cmegroup.com/CmeWS/mvc/Settlements/Options/Settlements/8116/OOF?monthYear=EUU'+sys.argv[1]+'21&strategy=DEFAULT&optionProductId=8116&optionExpiration=8116-'+sys.argv[1]+'1&tradeDate='+sys.argv[2], timeout=2.50, headers=h).json()
     last_quotes = [(item['strike'], item['type'], item['settle'], item['openInterest']) for item in r['settlements']]
 except requests.ReadTimeout: 
     print ("wait error")
