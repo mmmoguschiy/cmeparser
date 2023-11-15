@@ -1,5 +1,8 @@
 import sys
 import requests
+import matplotlib.pyplot as plt
+import numpy as np
+import matplotlib.ticker as ticker
 
 class st:
     def __init__(self, st, cs, ps, ci, pi, c, p, ct, pt):
@@ -91,3 +94,26 @@ for item in cp:
         item.pint,
         item.call,
         item.put)
+        
+strikes = [item.strike for item in cp]
+cinp_values = [item.cint for item in cp]
+pint_values = [item.pint for item in cp]
+
+bar_width = 0.35
+
+plt.bar(np.arange(len(strikes)), cinp_values, width=bar_width, label='CINP')
+plt.bar(np.arange(len(strikes)) + bar_width, pint_values, width=bar_width, label='PINT')
+
+plt.xlabel('Strike')
+plt.ylabel('CINP and PINT')
+plt.title('Strike vs CINP and PINT')
+
+
+plt.xticks(rotation=90)
+plt.xticks(np.arange(len(strikes)), strikes)
+
+# Добавление легенды
+plt.legend()
+
+# Отображение диаграммы
+plt.show()
