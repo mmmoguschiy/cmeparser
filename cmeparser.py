@@ -1,7 +1,6 @@
 import sys
 import requests
 
-
 class st:
     def __init__(self, st, cs, ps, ci, pi, c, p, ct, pt):
         self.strike = st
@@ -52,7 +51,8 @@ for item in last_quotes:
         continue
 
     y = False
-    strike = float(item[0]) / 10000
+#    strike = float(item[0]) / 10000
+    strike = float(item[0])
     for i in cp:
         if i.strike == strike:
             if item[2] == "CAB":
