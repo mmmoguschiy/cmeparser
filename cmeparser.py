@@ -112,8 +112,6 @@ plt.title('Strike vs CINP and PINT')
 plt.xticks(rotation=90)
 plt.xticks(np.arange(len(strikes)), strikes)
 
-# Добавление легенды
 plt.legend()
 
-# Отображение диаграммы
 plt.show()
