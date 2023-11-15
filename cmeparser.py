@@ -24,7 +24,11 @@ h = {
     }
 
 try:
-    r = requests.get('https://www.cmegroup.com/CmeWS/mvc/Settlements/Options/Settlements/8116/OOF?monthYear=EUU'+sys.argv[1]+'21&strategy=DEFAULT&optionProductId=8116&optionExpiration=8116-'+sys.argv[1]+'1&tradeDate='+sys.argv[2], timeout=2.50, headers=h).json()
+#    r = requests.get('https://www.cmegroup.com/CmeWS/mvc/Settlements/Options/Settlements/8116/OOF?monthYear=EUU'+sys.argv[1]+'21&strategy=DEFAULT&optionProductId=8116&optionExpiration=8116-'+sys.argv[1]+'1&tradeDate='+sys.argv[2], timeout=2.50, headers=h).json()
+    r = requests.get('https://www.cmegroup.com/CmeWS/mvc/Settlements/Options/Settlements/8116/OOF?monthYear=EUU'+sys.argv[1]+'23&strategy=DEFAULT&optionProductId=8116&optionExpiration=8116-'+sys.argv[1]+'3&tradeDate='+sys.argv[2], timeout=2.50, headers=h).json()
+#                      https://www.cmegroup.com/CmeWS/mvc/Settlements/Options/Settlements/8116/OOF?                               strategy=DEFAULT&optionProductId=8116&monthYear=EUUZ23&optionExpiration=8116-Z3&tradeDate=11/14/2023
+#                      https://www.cmegroup.com/CmeWS/mvc/Settlements/Options/Settlements/8116/OOF?strategy=DEFAULT&optionProductId=8116&monthYear=EUUZ23&optionExpiration=8116-Z3&tradeDate=11/14/2023
+
     last_quotes = [(item['strike'], item['type'], item['settle'], item['openInterest']) for item in r['settlements']]
 except requests.ReadTimeout: 
     print ("wait error")
@@ -66,4 +70,4 @@ for item in last_quotes:
 	cp.append(st(strike, settle, 0.0, interest, 0, call, 0.0, 0.0, 0.0))
     
 for item in cp:
-    print item.strike, item.cset, item.pset, item.cint, item.pint, item.call, item.put
+    print (item.strike, item.cset, item.pset, item.cint, item.pint, item.call, item.put)
