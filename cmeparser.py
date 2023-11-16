@@ -15,12 +15,6 @@ class st:
         self.put = p
         self.cit = ct
         self.pit = pt
-        
-def max_pain(strikes, calls, puts):
-    total = np.array(calls) + np.array(puts)
-    max_pain_index = np.argmin(np.abs(total - strikes))
-    
-    return strikes[max_pain_index]
 
 
 h = {
@@ -105,24 +99,55 @@ strikes = [item.strike for item in cp]
 cinp_values = [item.cint for item in cp]
 pint_values = [item.pint for item in cp]
 
-calls = [item.cset for item in cp]
-puts = [item.pset for item in cp]
+data = {
+    'strike': strikes,
+    'cset': cinp_values,
+    'pset': pint_values
+}
 
-max_pain(strikes, calls, puts)
+put_payouts = []
+call_payouts = []
 
-bar_width = 0.35
+for current_strike in data['strike']:
+    put_payout = 0
+    call_payout = 0
 
-plt.bar(np.arange(len(strikes)), cinp_values, width=bar_width, label='CINP')
-plt.bar(np.arange(len(strikes)) + bar_width, pint_values, width=bar_width, label='PINT')
+    for i in range(len(data['strike'])):
+        strike_price = data['strike'][i]
+        cset_price = data['cset'][i]
+        pset_price = data['pset'][i]
 
-plt.xlabel('Strike')
-plt.ylabel('CINP and PINT')
-plt.title('Strike vs CINP and PINT')
+        put_intrinsic_value = 0 if strike_price <= current_strike else (strike_price - current_strike)
 
+        call_intrinsic_value = 0 if strike_price >= current_strike else (current_strike - strike_price)
+
+        put_payout += put_intrinsic_value * pset_price
+
+        call_payout += call_intrinsic_value * cset_price
+
+    put_payouts.append(put_payout)
+    call_payouts.append(call_payout)
+    
+total_payouts = [put + call for put, call in zip(put_payouts, call_payouts)]
+
+min_index = total_payouts.index(min(total_payouts))
+
+fig, ax = plt.subplots()
+bar_width = 0.55
+opacity = 0.85
+
+index = range(len(data['strike']))
+rects1 = ax.bar(index, put_payouts, bar_width, alpha=opacity, color='orange', label='Put Payout')
+rects2 = ax.bar(index, call_payouts, bar_width, alpha=opacity, color='b', label='Call Payout', bottom=put_payouts)
+rects3 = ax.bar(min_index, total_payouts[min_index], bar_width, alpha=opacity, color='r', label='Maxpain')
+
+ax.set_xlabel('Strike')
+ax.set_ylabel('Payout')
+ax.set_title('Maxpain')
+ax.set_xticks(index)
+ax.set_xticklabels(data['strike'])
+ax.legend()
 
 plt.xticks(rotation=90)
-plt.xticks(np.arange(len(strikes)), strikes)
-
-plt.legend()
-
+plt.tight_layout()
 plt.show()
