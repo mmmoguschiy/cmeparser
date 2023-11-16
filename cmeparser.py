@@ -101,12 +101,12 @@ pint_values = [item.pint for item in cp]
 
 bar_width = 0.35
 
-plt.bar(np.arange(len(strikes)), cinp_values, width=bar_width, label='CINP')
-plt.bar(np.arange(len(strikes)) + bar_width, pint_values, width=bar_width, label='PINT')
+plt.bar(np.arange(len(strikes)), cinp_values, width=bar_width, label='Call open interest')
+plt.bar(np.arange(len(strikes)) + bar_width, pint_values, width=bar_width, label='Put open interest')
 
 plt.xlabel('Strike')
-plt.ylabel('CINP and PINT')
-plt.title('Strike vs CINP and PINT')
+plt.ylabel('Interest')
+plt.title('Open interest profile')
 
 
 plt.xticks(rotation=90)
