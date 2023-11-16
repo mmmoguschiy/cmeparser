@@ -15,6 +15,12 @@ class st:
         self.put = p
         self.cit = ct
         self.pit = pt
+        
+def max_pain(strikes, calls, puts):
+    total = np.array(calls) + np.array(puts)
+    max_pain_index = np.argmin(np.abs(total - strikes))
+    
+    return strikes[max_pain_index]
 
 
 h = {
@@ -98,6 +104,11 @@ for item in cp:
 strikes = [item.strike for item in cp]
 cinp_values = [item.cint for item in cp]
 pint_values = [item.pint for item in cp]
+
+calls = [item.cset for item in cp]
+puts = [item.pset for item in cp]
+
+max_pain(strikes, calls, puts)
 
 bar_width = 0.35
 

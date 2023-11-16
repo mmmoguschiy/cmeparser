@@ -12,4 +12,11 @@ M - the letter of the expiration month (in this case, it is June)
 25 - number
 2021 - year
 
-The month, day and year form the date on which the report is available. 
+The month, day and year form the date on which the report is available.
+
+
+Branches
+
+plot - Output of an open interest diagram
+
+maxpain - calculation and output of the maxpain diagram
